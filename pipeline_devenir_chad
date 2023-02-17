@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: "NOM", description: "Veuillez entrer votre nom")
+        string(name: "PRENOM", description: "Veuillez entrer votre prénom")
+        choice(name: "SEXE", choices: ["Homme","Femme","Chad"], description: "Veuillez choisir votre sexe")
+        string(name: "TAILLE", description: "Veuillez entre votre taille en centimètres")
+        string(name: "AGE", description: "Veuillez entrer votre âge")
+        string(name: "POIDS_ACTUEL", description: "Veuillez entre votre poids")
+        choice(name: "MOIS", choices: ["Mars","Avril","Mai"], description: "Veuillez entrer le mois de départ de votre programme")
+        choice(name: "TYPE_REGIME", choices: ["Strict","Modéré"], description: "Veuillez sélectionner le type de régime souhaité")
+        string(name: "SOMMEIL", description: "Veuillez indiquer le nombre d'heures de sommeil moyen que vous avez")
+        string(name: "LITRES_EAU", description: "Veuillez indiquer le nombre de litres d'eau bu en moyenne par jour")
+        booleanParam(name: "ACTIVITE_PHYS", description: "Veuillez indiquez si vous pratiquer une activité physique")
+        choice(name: "NB_ACTIVITE", choices: ["0","1","2","3","4","5","6","7"], description: "Si oui, indiquez le nombre de jours par semaine dans lesquels vous pratiquez une activité physique")
+        choice(name: "NB_FL", choices: ["0","1","2","3","4","5"], description: "Veuillez indiquer le nombre de fruits et légumes que vous consommez par jour")
+        booleanParam(name: "ACCOMPAGNEMENT", description: "Souhaitez-vous être accompagné par un diététicien ou un nutritionniste ?")
+        booleanParam(name: "SALLE", description: "Souhaitez vous adhérer à une des salles de sport de nos partenaires ?")
+    }
+    stages {
+        stage ("Build-Programme_3_mois") {
+            steps {
+                def nom = "${params.NOM}"
+                def prenom = "${params.PRENOM}"
+                def taille = "${params.TAILLE}"
+                def age = "${params.AGE}"
+                def poids_actuel = "${params.POIDS_ACTUEL}"
+                def type_regime = "${params.TYPE_REGIME}"
+                def lires_eau = "${params.LITRES_EAU}"
+                def activite_phys = "${params.ACTIVITE_PHYS}"
+                def nb_activite = "${params.NB_ACTIVITE}"
+
+                script {
+                    echo "Bonjour $prenom, prêt à reprendre votre vie en main?"
+                }
+            }
+        }
+    }
+}
