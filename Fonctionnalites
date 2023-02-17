@@ -1,8 +1,18 @@
-- Saisir Nom, Prénom
-- Sexe
-- Taille
-- Age
-- Poids actuel
-- Mois (Mars, Avril, Mai)
+Liste EPIC & US :
 
+  - [EPIC] Programme sur 3 mois
+  - [EPIC] Challenges mensuels
+  - [EPIC] Jounal de suivi du poids
+  
+
+Informations saisies par l'utilsateur :
+
+  - Saisir Nom, Prénom
+  - Sexe
+  - Taille
+  - Age
+  - Poids actuel
+  - Mois (Mars, Avril, Mai)
+  - Objectif (régime strict pour perdre énormément de poids, régime modéré)
+  - 
 
