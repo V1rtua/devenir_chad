@@ -21,8 +21,19 @@ pipeline {
         booleanParam(name: "SALLE", description: "Souhaitez vous adhérer à une des salles de sport de nos partenaires ?")
     }
     stages {
-        stage ("Build-Programme_3_mois") {
+        stage ("Build-EPIC_US") {
             steps {
+                // Construction des EPIC est des US
+
+                echo "Construction de l'EPIC : Programme sur 3 mois"
+                echo "Construction de l'US : Définir un "
+                echo "Construction de l'EPIC : Challenges Mensuels"
+                echo "Construction de l'EPIC : Journal de suivi du poids"
+                echo "Construction de l'EPIC : Rapport calorique"
+            }
+        }
+        stage ("Test-Programme_3_mois"){
+            steps{
                 script {
 
                     // Variables qui récupère les informations rentrées en paramètres par l'utilisateur
@@ -33,10 +44,6 @@ pipeline {
                     Integer taille = "${params.TAILLE}" as Integer
                     Integer age = "${params.AGE}" as Integer
                     Integer poids_actuel = "${params.POIDS_ACTUEL}" as Integer
-                    def type_regime = "${params.TYPE_REGIME}"
-                    Integer litres_eau = "${params.LITRES_EAU}" as Integer
-                    def activite_phys = "${params.ACTIVITE_PHYS}"
-                    def nb_activite = "${params.NB_ACTIVITE}"
                     def activite = "${params.ACTIVITE}"
 
                     // Message de bienvenue
