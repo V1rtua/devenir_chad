@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: "NOM", description: "Veuillez entrer votre nom")
+        string(name: "PRENOM", description: "Veuillez entrer votre prénom")
+        choice(name: "SEXE", choices: ["Homme","Femme","Chad"], description: "Veuillez choisir votre sexe")
+        string(name: "TAILLE", description: "Veuillez entre votre taille en centimètres")
+        string(name: "AGE", description: "Veuillez entrer votre âge")
+        booleanParam(name: "PREMIERE_INSCRIPTION", description: "S'agit-il de votre première inscription")
+        string(name: "POIDS_BASE", description: "Veuillez entrer votre poids au moment du commencement du programme" )
+        string(name: "POIDS_ACTUEL", description: "Veuillez entrer votre poids actuel. si c'est votre première inscription le poids est identique au poids de base")
+        choice(name: "ACTIVITE", choices: ["Sédentaire","Normal","Actif"], description: "Veuillez indiquer votre activité quotidienne")
+        choice(name: "MOIS", choices: ["Mars","Avril","Mai"], description: "Veuillez entrer le mois de départ de votre programme")
+        choice(name: "TYPE_REGIME", choices: ["Strict","Modéré"], description: "Veuillez sélectionner le type de régime souhaité")
+        string(name: "SOMMEIL", description: "Veuillez indiquer le nombre d'heures de sommeil moyen que vous avez")
+        string(name: "LITRES_EAU", description: "Veuillez indiquer le nombre de litres d'eau bu en moyenne par jour")
+        booleanParam(name: "ACTIVITE_PHYS", description: "Veuillez indiquez si vous pratiquer une activité physique")
+        choice(name: "NB_ACTIVITE", choices: ["0","1","2","3","4","5","6","7"], description: "Si oui, indiquez le nombre de jours par semaine dans lesquels vous pratiquez une activité physique")
+        choice(name: "NB_FL", choices: ["0","1","2","3","4","5"], description: "Veuillez indiquer le nombre de fruits et légumes que vous consommez par jour")
+        booleanParam(name: "ACCOMPAGNEMENT", description: "Souhaitez-vous être accompagné par un diététicien ou un nutritionniste ?")
+        booleanParam(name: "SALLE", description: "Souhaitez vous adhérer à une des salles de sport de nos partenaires ?")
+    }
+    stages {
+        stage ("Build-Programme_3_mois") {
+            steps {
+                script {
+
+                    # Variables qui récupère les informations rentrées en paramètres par l'utilisateur
+
+                    def nom = "${params.NOM}"
+                    def prenom = "${params.PRENOM}"
+                    def sexe = "${params.SEXE}"
+                    def taille = "${params.TAILLE}"
+                    def age = "${params.AGE}"
+                    def poids_actuel = "${params.POIDS_ACTUEL}"
+                    def type_regime = "${params.TYPE_REGIME}"
+                    def lires_eau = "${params.LITRES_EAU}"
+                    def activite_phys = "${params.ACTIVITE_PHYS}"
+                    def nb_activite = "${params.NB_ACTIVITE}"
+
+                    # Message de bienvenue
+
+                    echo "Bonjour $prenom, prêt à reprendre votre vie en main ?"
+
+                    # Calcul des besoins en calories du métabolisme de base 
+
+                    if (sexe == "Femme"){
+                        def metabolisme = 9740 * $poids_actuel + 172.9 * $taille - 4.737 * age + 667.051
+                        echo $metabolisme
+                    }
+                    else {
+                        def metabolisme = 13.707 * $poids_actuel + 492.3 * $taille - 6.673 * age + 77.607
+                        echo $metabolisme
+                    }
+                }
+            }
+        }
+    }
+}
