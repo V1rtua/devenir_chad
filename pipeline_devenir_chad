@@ -30,11 +30,11 @@ pipeline {
                     def nom = "${params.NOM}"
                     def prenom = "${params.PRENOM}"
                     def sexe = "${params.SEXE}"
-                    def taille = "${params.TAILLE}" as Integer
-                    def age = "${params.AGE}" as Integer
-                    def poids_actuel = "${params.POIDS_ACTUEL}" as Integer
+                    def taille = "${params.TAILLE}" as int
+                    def age = "${params.AGE}" as int
+                    def poids_actuel = "${params.POIDS_ACTUEL}" as int
                     def type_regime = "${params.TYPE_REGIME}"
-                    def lires_eau = "${params.LITRES_EAU}" as Integer
+                    def lires_eau = "${params.LITRES_EAU}" as int
                     def activite_phys = "${params.ACTIVITE_PHYS}"
                     def nb_activite = "${params.NB_ACTIVITE}"
 
