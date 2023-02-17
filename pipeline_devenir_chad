@@ -11,7 +11,7 @@ pipeline {
         string(name: "SOMMEIL", description: "Veuillez indiquer le nombre d'heures de sommeil moyen que vous avez")
         string(name: "LITRES_EAU", description: "Veuillez indiquer le nombre de litres d'eau bu en moyenne par jour")
         booleanParam(name: "ACTIVITE_PHYS", description: "Veuillez indiquez si vous pratiquer une activité physique")
-        choice(name: "NB_ACTIVITE", choices: ["0","1","2","3","4","5","6","7"], desription: "Si oui, indiquez le nombre de jours par semaine dans lesquels vous pratiquez une activité physique")
+        choice(name: "NB_ACTIVITE", choices: ["0","1","2","3","4","5","6","7"], description: "Si oui, indiquez le nombre de jours par semaine dans lesquels vous pratiquez une activité physique")
         choice(name: "NB_FL", choices: ["0","1","2","3","4","5"], description: "Veuillez indiquer le nombre de fruits et légumes que vous consommez par jour")
         booleanParam(name: "ACCOMPAGNEMENT", description: "Souhaitez-vous être accompagné par un diététicien ou un nutritionniste ?")
         booleanParam(name: "SALLE", description: "Souhaitez vous adhérer à une des salles de sport de nos partenaires ?")
