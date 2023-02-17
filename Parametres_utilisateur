@@ -1,0 +1,17 @@
+Informations saisies par l'utilsateur :
+
+  - Saisir Nom, Prénom
+  - Sexe
+  - Taille
+  - Age
+  - Poids actuel
+  - Mois de début (Mars, Avril, Mai)
+  - Mois actuel
+  - Type de régime (régime strict pour perdre énormément de poids, régime modéré)
+  - Nombre d'heures de sommeil moyen
+  - Nombre de litres d'eau bu en moyenne par jour
+  - Activité physique ou non
+  - Nombre de jour de sport par semaine
+  - Nombre de fruits et légumes mangé par jour
+  - Demander si il souhaite être accompagné par un diéteticien / nutritionniste
+  - Lui proposer d'adhèrer à une salle de sport partenaire 
