@@ -24,13 +24,28 @@ pipeline {
         stage ("Build-EPIC_US") {
             steps {
                 // Construction des EPIC et des US
-
+                
                 echo "Construction de l'EPIC : Programme sur 3 mois"
                 echo "Construction de l'US : Définir un objectif de poids"
                 echo "Construction de l'US : Définir un nombre de calories à consommer"
-                echo "Construction de l'EPIC : Challenges Mensuels"
+                echo "Construction de l'US : Questionnaire sur les habitudes quotidiennes"
+                echo "Construction de l'US : Différents types d'abonnement"
+                echo "Construction de l'US : Feedback"
+
                 echo "Construction de l'EPIC : Journal de suivi du poids"
+                echo "Construction de l'US : Vérification du respect de l'objectif du programme"
+                echo "Construction de l'US : Proposer des repas sains"
+                echo "Construction de l'US : Prévenir du grignotage"
+                echo "Construction de l'US : Suivi de l'hydratation"
+                echo "Construction de l'US : Suivi du sommeil"
+
+
                 echo "Construction de l'EPIC : Rapport calorique"
+                echo "Construction de l'US : Conseiller des activités physiques"
+                echo "Construction de l'US : Mettre en relation avec des salles de sport"
+                echo "Construction de l'US : Mettre en relation avec des experts en alimentation"
+
+                echo "Construction de l'EPIC : Challenges Mensuels"
             }
         }
         stage ("Test-EPIC-Programme_3_mois"){
@@ -46,6 +61,7 @@ pipeline {
                     Integer age = "${params.AGE}" as Integer
                     Integer poids_actuel = "${params.POIDS_ACTUEL}" as Integer
                     def activite = "${params.ACTIVITE}"
+                    def type_regime = "${params.TYPE_REGIME}"
 
                     // Message de bienvenue
 
@@ -91,6 +107,10 @@ pipeline {
                             echo besoin_calories.toString()
                         }
                     }
+
+
+
+
                 }
             }
         }
