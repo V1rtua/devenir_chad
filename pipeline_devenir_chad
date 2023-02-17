@@ -52,15 +52,15 @@ pipeline {
                         // Calcul des besoins en calories en prenant en compte le niveau d'activité pour une Femme
                         if (activite == "Sédentaire"){
                             float besoin_calories = metabolisme * 1.55
-                            echo besoin_calories
+                            echo besoin_calories.toString()
                         }
                         else if (activite == "Normal") {
                             float besoin_calories = metabolisme * 1.78
-                            echo besoin_calories
+                            echo besoin_calories.toString()
                         }
                         else {
                             float besoin_calories = metabolisme * 2.10
-                            echo besoin_calories
+                            echo besoin_calories.toString()
                         }
                     }
 
@@ -76,11 +76,11 @@ pipeline {
                         }
                         else if (activite == "Normal") {
                             float besoin_calories = metabolisme * 1.64
-                            echo besoin_calories.toString
+                            echo besoin_calories.toString()
                         }
                         else {
                             float besoin_calories = metabolisme * 1.82
-                            echo besoin_calories.toString
+                            echo besoin_calories.toString()
                         }
                     }
                 }
