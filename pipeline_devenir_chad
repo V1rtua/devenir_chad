@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
 
-                    # Variables qui récupère les informations rentrées en paramètres par l'utilisateur
+                    // Variables qui récupère les informations rentrées en paramètres par l'utilisateur
 
                     def nom = "${params.NOM}"
                     def prenom = "${params.PRENOM}"
@@ -38,11 +38,11 @@ pipeline {
                     def activite_phys = "${params.ACTIVITE_PHYS}"
                     def nb_activite = "${params.NB_ACTIVITE}"
 
-                    # Message de bienvenue
+                    // Message de bienvenue
 
                     echo "Bonjour $prenom, prêt à reprendre votre vie en main ?"
 
-                    # Calcul des besoins en calories du métabolisme de base 
+                    // Calcul des besoins en calories du métabolisme de base 
 
                     if (sexe == "Femme"){
                         def metabolisme = 9740 * $poids_actuel + 172.9 * $taille - 4.737 * age + 667.051
