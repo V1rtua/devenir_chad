@@ -23,16 +23,17 @@ pipeline {
     stages {
         stage ("Build-EPIC_US") {
             steps {
-                // Construction des EPIC est des US
+                // Construction des EPIC et des US
 
                 echo "Construction de l'EPIC : Programme sur 3 mois"
-                echo "Construction de l'US : Définir un "
+                echo "Construction de l'US : Définir un objectif de poids"
+                echo "Construction de l'US : Définir un nombre de calories à consommer"
                 echo "Construction de l'EPIC : Challenges Mensuels"
                 echo "Construction de l'EPIC : Journal de suivi du poids"
                 echo "Construction de l'EPIC : Rapport calorique"
             }
         }
-        stage ("Test-Programme_3_mois"){
+        stage ("Test-EPIC-Programme_3_mois"){
             steps{
                 script {
 
