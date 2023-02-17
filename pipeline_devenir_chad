@@ -37,20 +37,51 @@ pipeline {
                     Integer litres_eau = "${params.LITRES_EAU}" as Integer
                     def activite_phys = "${params.ACTIVITE_PHYS}"
                     def nb_activite = "${params.NB_ACTIVITE}"
+                    def activite = "${params.ACTIVITE}"
 
                     // Message de bienvenue
 
                     echo "Bonjour $prenom, prêt à reprendre votre vie en main ?"
 
-                    // Calcul des besoins en calories du métabolisme de base 
+                    // Calcul des besoins en calories du métabolisme de base pour une femme
 
                     if (sexe == "Femme"){
                         def metabolisme = 9740 * poids_actuel + 172.9 * taille / 100 - 4.737 * age + 667.051
                         echo metabolisme.toString()
+
+                        // Calcul des besoins en calories en prenant en compte le niveau d'activité pour une Femme
+                        if (activite == "Sédentaire"){
+                            def besoin_calories = metabolisme * 1.55
+                            echo besoin_calories
+                        }
+                        else if (activite == "Normal") {
+                            def besoin_calories = metabolisme * 1.78
+                            echo besoin_calories
+                        }
+                        else {
+                            def besoin_calories = metabolisme * 2.10
+                            echo besoin_calories
+                        }
                     }
+
+                    // Calcul des besoins en calories du métabolisme de base pour un Homme
                     else {
                         def metabolisme = 13.707 * poids_actuel + 492.3 * taille / 100 - 6.673 * age + 77.607
                         echo metabolisme.toString()
+
+                        // Calcul des besoins en calories en prenant en compte le niveau d'activité pour un Homme
+                        if (activite == "Sédentaire"){
+                            def besoin_calories = metabolisme * 1.56
+                            echo besoin_calories
+                        }
+                        else if (activite == "Normal") {
+                            def besoin_calories = metabolisme * 1.64
+                            echo besoin_calories
+                        }
+                        else {
+                            def besoin_calories = metabolisme * 1.82
+                            echo besoin_calories
+                        }
                     }
                 }
             }
