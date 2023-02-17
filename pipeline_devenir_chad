@@ -45,11 +45,11 @@ pipeline {
                     // Calcul des besoins en calories du métabolisme de base 
 
                     if (sexe == "Femme"){
-                        def metabolisme = 9740 * poids_actuel + 172.9 * taille - 4.737 * age + 667.051
+                        def metabolisme = 9740 * poids_actuel + 172.9 * taille / 100 - 4.737 * age + 667.051
                         echo metabolisme.toString()
                     }
                     else {
-                        def metabolisme = 13.707 * poids_actuel + 492.3 * taille - 6.673 * age + 77.607
+                        def metabolisme = 13.707 * poids_actuel + 492.3 * taille / 100 - 6.673 * age + 77.607
                         echo metabolisme.toString()
                     }
                 }
