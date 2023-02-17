@@ -15,6 +15,7 @@ pipeline {
         choice(name: "NB_FL", choices: ["0","1","2","3","4","5"] description: "Veuillez indiquer le nombre de fruits et légumes que vous consommez par jour")
         booleanParam(name: "ACCOMPAGNEMENT", description: "Souhaitez-vous être accompagné par un diététicien ou un nutritionniste ?")
         booleanParam(name: "SALLE", description: "Souhaitez vous adhérer à une des salles de sport de nos partenaires ?")
+    }
     
     stages {
         stage ("ECHO") {
@@ -34,6 +35,5 @@ pipeline {
                 echo ${params.SALLE}
             }
         }
-    }
     }
 }
