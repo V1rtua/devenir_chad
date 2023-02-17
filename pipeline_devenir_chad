@@ -20,19 +20,19 @@ pipeline {
     stages {
         stage ("ECHO") {
             steps {
-                echo ${params.NOM}
-                echo ${params.PRENOM}
-                echo ${params.TAILLE}
-                echo ${params.AGE}
-                echo ${params.POIDS}
-                echo ${params.TYPE_REGIME}
-                echo ${params.SOMMEIL}
-                echo ${params.LITRES_EAU}
-                echo ${params.ACTIVITE_PHYS}
-                echo ${params.NB_ACTIVITE}
-                echo ${params.NB_FL}
-                echo ${params.ACCOMPAGNEMENT}
-                echo ${params.SALLE}
+                echo "${params.NOM}"
+                echo "${params.PRENOM}"
+                echo "${params.TAILLE}"
+                echo "${params.AGE}"
+                echo "${params.POIDS}"
+                echo "${params.TYPE_REGIME}"
+                echo "${params.SOMMEIL}"
+                echo "${params.LITRES_EAU}"
+                echo "${params.ACTIVITE_PHYS}"
+                echo "${params.NB_ACTIVITE}"
+                echo "${params.NB_FL}"
+                echo "${params.ACCOMPAGNEMENT}"
+                echo "${params.SALLE}"
             }
         }
     }
