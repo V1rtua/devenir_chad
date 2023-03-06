@@ -69,7 +69,9 @@ pipeline {
                     def type_regime = "${params.TYPE_REGIME}"
                     Integer objectif_poids = "${params.OBJECTIF_POIDS}" as Integer
 
+                    float besoin_calories
                     Integer poids_a_perdre = poids_actuel - objectif_poids
+                
 
                     // Message de bienvenue
 
@@ -128,7 +130,7 @@ pipeline {
                             }  
                         }
                         else if (256 * 90 >= poids_a_perdre * 7680){
-                            Integer obj_calories = ${besoin_calories} - 256
+                            Integer obj_calories = besoin_calories - 256
                             echo "Pour atteindre votre objectif, vous devez consommmer $obj_calories calories par jour pour perdre $poids_a_perdre en 3 mois"
                         }
                     }
@@ -138,7 +140,7 @@ pipeline {
                             echo "Votre objectif est impossible à atteindre dans le temps donné"
                         }
                         else {
-                            Integer obj_calories = ${besoin_calories} - 512
+                            Integer obj_calories = besoin_calories - 512
                             echo "Pour atteindre votre objectif, vous devez consommer $obj_calories calories par jour pour perdre $poids_a_perdre en 3 mois" 
                         }
                     }
