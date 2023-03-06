@@ -6,7 +6,6 @@ pipeline {
         choice(name: "SEXE", choices: ["Homme","Femme","Chad"], description: "Veuillez choisir votre sexe")
         string(name: "TAILLE", description: "Veuillez entre votre taille en centimètres")
         string(name: "AGE", description: "Veuillez entrer votre âge")
-        booleanParam(name: "PREMIERE_INSCRIPTION", description: "S'agit-il de votre première inscription")
         string(name: "POIDS_BASE", description: "Veuillez entrer votre poids au moment du commencement du programme" )
         string(name: "POIDS_ACTUEL", description: "Veuillez entrer votre poids actuel. si c'est votre première inscription le poids est identique au poids de base")
         string(name: "OBJECTIF_POIDS", description: "Veuillez entrer votre objectif en terme de poids")
@@ -125,11 +124,16 @@ pipeline {
                         else if (512 * 90 >= poids_a_perdre * 7680){
                             echo "Toutefois, si vous optez pour le type de régime 'Strict', vous pourrez atteindre votre objectif de perte de poids de $poids_a_perdre kg en 3 mois"
                         }
-                        else {
+                        else if (256 * 90 >= poids_a_perdre * 7680){
                             Integer obj_calories = besoin_calories - 256
                             echo "Pour atteindre votre objectif, vous devez consommmer $obj_calories calories par jour pour perdre $poids_a_perdre en 3 mois"
                         }
+                        else {
+                            echo "Votre objectif est impossible à atteindre dans le temps donné"
+                        }
                     }
+
+                    if ()
 
                 }
             }
