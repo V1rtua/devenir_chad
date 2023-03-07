@@ -177,7 +177,7 @@ pipeline {
 
                     echo today.toString()
 
-                    today = today.format("yyyy-MM-dd")
+                    today = today.format("dd-MM-yyyy")
 
                     echo today.toString()
                     
