@@ -1,13 +1,5 @@
 import java.text.SimpleDateFormat
 
-// Fonction pour récupérer le nombre de jours passés avec le programme
-public def getRemainingDays(previousDate){
-    def currentDate = new Date()
-    String currentTimeFormat = currentDate.format("yyyy-MM-dd")
-    def oldDate = new SimpleDateFormat("yyyy-MM-dd").parse(previousDate)
-    return currentTimeFormat-oldDate
-}
-
 float obj_calories
 float poids_a_perdre
 
@@ -172,6 +164,7 @@ pipeline {
                     float poids_actuel = "${params.POIDS_ACTUEL}" as float
                     float eau_conso = "${params.LITRES_EAU}" as float
                     def debut_prog = "${params.DEBUT_PROG}"
+                    def today = new Date()
 
                     // Recommandation consommation eau : 35 ml par kg
                     float eau_recom = 0.035 * poids_actuel
@@ -181,9 +174,12 @@ pipeline {
                     // Suivi du programme
 
                     echo "Suivi du programme"
+
+                    echo today
                     
-                    def jours_suivis = getRemainingDays(debut_prog)
-                    echo jours_suivis
+                    //use(groovy.time.TimeCategory){
+                        //def jours_suivis = today - debut_prog
+                    //}
 
                     //Integer jours_restants = 90  - jours_suivis
 
