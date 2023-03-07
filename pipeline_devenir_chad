@@ -4,14 +4,6 @@ pipeline {
     agent any
 
     // Fonction pour récupérer le nombre de jours passés avec le programme
-    
-    @NonCPS
-    def getRemainingDays(previousDate){
-        def currentDate = new Date()
-        String currentTimeFormat = currentDate.format("dd-MM-yyyy")
-        def oldDate = new SimpleDateFormat("dd-MM-yyyy").parse(previousDate)
-        return currentTimeFormat - oldDate
-    }
 
     parameters {
         string(name: "NOM", description: "Veuillez entrer votre nom")
@@ -37,6 +29,14 @@ pipeline {
     }
 
     stages {
+
+        def getRemainingDays(previousDate){
+            def currentDate = new Date()
+            String currentTimeFormat = currentDate.format("dd-MM-yyyy")
+            def oldDate = new SimpleDateFormat("dd-MM-yyyy").parse(previousDate)
+            return currentTimeFormat - oldDate
+        }
+
         stage ("Build-EPIC_US") {
             steps {
                 // Construction des EPIC et des US
