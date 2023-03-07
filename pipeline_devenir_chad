@@ -182,13 +182,9 @@ pipeline {
 
                     echo today.toString()
                     
-                    echo Math.abs(today - date_debut)
-                    
-                    //use(groovy.time.TimeCategory){
-                        //def jours_suivis = today - debut_prog
-                    //}
+                    Integer jours_suivis = today - today
 
-                    //Integer jours_restants = 90  - jours_suivis
+                    echo today.toString
 
                     // Suivi de l'hydratation
 
