@@ -175,7 +175,7 @@ pipeline {
 
                     echo "Suivi du programme"
 
-                    echo today
+                    echo today.toString()
                     
                     //use(groovy.time.TimeCategory){
                         //def jours_suivis = today - debut_prog
