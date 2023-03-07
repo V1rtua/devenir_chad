@@ -114,6 +114,8 @@ pipeline {
                         }
                     }
 
+                    echo "Objectif calorique quotidien :"
+
                     // Calcul permettant de déterminer le nombre de calories à perdre quotidiennement pour atteindre l'objectif
                     if (type_regime == "Modéré"){
                         if (256 * 90 < poids_a_perdre * 7680){
@@ -161,6 +163,8 @@ pipeline {
 
                     // Suivi de l'hydratation
 
+                    echo "Suivi hydratation :"
+
                     // Si la consommation quotidienne est inférieure aux recommandations
                     if (eau_recom > eau_conso){
                         echo "Votre consommation d'eau quotidienne n'est pas suffisante"
@@ -181,6 +185,9 @@ pipeline {
                     }
                     
                     // Suivi du sommeil
+
+                    echo "Suivi sommeil :"
+                    
                     if (sommeil < 7){
                         echo "Votre temps de sommeil est insuffisant"
                         echo "Temps de sommeil conseillé : 7 à 10 heures"
