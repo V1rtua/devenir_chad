@@ -1,5 +1,17 @@
+import java.text.SimpleDateFormat
+
 pipeline {
     agent any
+
+    // Fonction pour récupérer le nombre de jours passés avec le programme
+    
+    def getRemainingDays(previousDate){
+        def currentDate = new Date()
+        String currentTimeFormat = currentDate.format("dd-MM-yyyy")
+        def oldDate = new SimpleDateFormat("dd-MM-yyyy").parse(previousDate)
+        return currentTimeFormat - oldDate
+    }
+
     parameters {
         string(name: "NOM", description: "Veuillez entrer votre nom")
         string(name: "PRENOM", description: "Veuillez entrer votre prénom")
@@ -12,7 +24,7 @@ pipeline {
         string(name: "POIDS_ACTUEL", description: "Veuillez entrer votre poids actuel. si c'est votre première inscription le poids est identique au poids de base")
         string(name: "OBJECTIF_POIDS", description: "Veuillez entrer votre objectif en terme de poids")
         choice(name: "ACTIVITE", choices: ["Sédentaire","Normal","Actif"], description: "Veuillez indiquer votre activité quotidienne")
-        choice(name: "MOIS", choices: ["Mars","Avril","Mai"], description: "Veuillez entrer le mois de départ de votre programme")
+        string(name: "DEBUT_PROG", description: "Veuillez entrer la date de début de votre programme")
         choice(name: "TYPE_REGIME", choices: ["Strict","Modéré"], description: "Veuillez sélectionner le type de régime souhaité")
         string(name: "SOMMEIL", description: "Veuillez indiquer le nombre d'heures de sommeil moyen que vous avez")
         string(name: "LITRES_EAU", description: "Veuillez indiquer le nombre de litres d'eau bu en moyenne par jour")
@@ -22,6 +34,7 @@ pipeline {
         booleanParam(name: "ACCOMPAGNEMENT", description: "Souhaitez-vous être accompagné par un diététicien ou un nutritionniste ?")
         booleanParam(name: "SALLE", description: "Souhaitez vous adhérer à une des salles de sport de nos partenaires ?")
     }
+
     stages {
         stage ("Build-EPIC_US") {
             steps {
