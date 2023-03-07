@@ -172,7 +172,7 @@ pipeline {
                     def today = new Date()
                     def date_debut = new SimpleDateFormat("yyyy-MM-dd").parse(debut_prog)
 
-                    float objectif_poids = "${params.OBJECTIF_POIDS}"
+                    float objectif_poids = "${params.OBJECTIF_POIDS}" as float
                     float poids_a_perdre = poids_actuel - objectif_poids
                     def type_regime = "${params.TYPE_REGIME}"
 
@@ -182,7 +182,7 @@ pipeline {
 
                     // Récupération du nombre de jours suivis du programme
                     def jours_suivis = today - date_debut
-                    jours_suivis = jours_suivis as Integer
+                    jours_suivis as Integer
                     Integer jours_restants = 90 - jours_suivis
 
                     echo "Vous avez suivi $jours_suivis jours du programme, continuez comme ça !"
