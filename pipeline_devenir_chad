@@ -6,6 +6,7 @@ pipeline {
         choice(name: "SEXE", choices: ["Homme","Femme","Chad"], description: "Veuillez choisir votre sexe")
         string(name: "TAILLE", description: "Veuillez entre votre taille en centimètres")
         string(name: "AGE", description: "Veuillez entrer votre âge")
+        booleanParam(name: "PREMIERE_INSCRIPTION", description: "Est-ce votre première inscription ?")
         string(name: "POIDS_BASE", description: "Veuillez entrer votre poids au moment du commencement du programme" )
         string(name: "POIDS_ACTUEL", description: "Veuillez entrer votre poids actuel. si c'est votre première inscription le poids est identique au poids de base")
         string(name: "OBJECTIF_POIDS", description: "Veuillez entrer votre objectif en terme de poids")
@@ -64,10 +65,12 @@ pipeline {
                     def sexe = "${params.SEXE}"
                     Integer taille = "${params.TAILLE}" as Integer
                     Integer age = "${params.AGE}" as Integer
+                    def premiere_inscription = "${params.PREMIERE_INSCRIPTION}"
                     Integer poids_actuel = "${params.POIDS_ACTUEL}" as Integer
                     def activite = "${params.ACTIVITE}"
                     def type_regime = "${params.TYPE_REGIME}"
                     Integer objectif_poids = "${params.OBJECTIF_POIDS}" as Integer
+                    
 
                     float besoin_calories
                     Integer poids_a_perdre = poids_actuel - objectif_poids
@@ -143,6 +146,12 @@ pipeline {
                         else {
                             obj_calories = besoin_calories - 512
                             echo "Pour atteindre votre objectif, vous devez consommer $obj_calories calories par jour pour perdre $poids_a_perdre en 3 mois" 
+                        }
+                    }
+
+                    if (premiere_inscription == false){
+                        parameters{
+                            choice(name: "FEEDBACK", choices:["1","2","3","4","5"], description: "Quelles note donnerez-vous à notre application ?")
                         }
                     }
 
