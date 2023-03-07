@@ -166,11 +166,11 @@ pipeline {
                     float eau_recom = 0.035 * poids_actuel
 
 
-                    if (0.035 * poids_actuel > eau_conso){
+                    if (eau_recom > eau_conso){
                         echo "Votre consommation d'eau quotidienne $eau_conso n'est pas suffisante"
                         echo "Consommation d'eau quotidienne recommandée : $eau_recom Litres"
                     }
-                    else if (0.035 * poids_actuel * 1.5 <= eau_conso){
+                    else if (eau_recom * 1.5 <= eau_conso){
                         echo "Vous consommez trop d'eau quotidiennement"
                         echo "Consommation d'eau quotidienne recommandée : $eau_recom Litres"
 
