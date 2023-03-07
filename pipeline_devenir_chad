@@ -7,6 +7,7 @@ pipeline {
         string(name: "TAILLE", description: "Veuillez entre votre taille en centimètres")
         string(name: "AGE", description: "Veuillez entrer votre âge")
         booleanParam(name: "PREMIERE_INSCRIPTION", description: "Est-ce votre première inscription ?")
+        choice(name: "TYPE_ABONNEMENT", choices:["Basic","Prenium"], description: "Veuillez sélectionner l'abonnement que vous souhaitez prendre. L'abonnement Prenium inclut la mise en relation avec des salles de sport et des ditéticiens ainsi que les challenges mensuels.")
         string(name: "POIDS_BASE", description: "Veuillez entrer votre poids au moment du commencement du programme" )
         string(name: "POIDS_ACTUEL", description: "Veuillez entrer votre poids actuel. si c'est votre première inscription le poids est identique au poids de base")
         string(name: "OBJECTIF_POIDS", description: "Veuillez entrer votre objectif en terme de poids")
@@ -150,10 +151,9 @@ pipeline {
                     }
 
                     if (premiere_inscription == false){
-                        parameters{
-                            choice(name: "FEEDBACK", choices:["1","2","3","4","5"], description: "Quelles note donnerez-vous à notre application ?")
-                        }
+                        echo "Votre avis est important, quelle note donneriez-vous à notre application ?"
                     }
+
 
                 }
             }
