@@ -5,6 +5,7 @@ pipeline {
 
     // Fonction pour récupérer le nombre de jours passés avec le programme
     
+    @NonCPS
     def getRemainingDays(previousDate){
         def currentDate = new Date()
         String currentTimeFormat = currentDate.format("dd-MM-yyyy")
