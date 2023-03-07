@@ -4,8 +4,7 @@ import java.text.SimpleDateFormat
 def getRemainingDays(previousDate){
     def currentDate = new Date()
     String currentTimeFormat = currentDate.format("dd-MM-yyyy")
-    def oldDate = new SimpleDateFormat("dd-MM-yyyy").parse(previousDate)
-    return currentTimeFormat - oldDate
+    return currentTimeFormat - previousDate
 }
 
 float obj_calories
