@@ -1,5 +1,12 @@
 import java.text.SimpleDateFormat
 
+def getRemainingDays(previousDate){
+    def currentDate = new Date()
+    String currentTimeFormat = currentDate.format("dd-MM-yyyy")
+    def oldDate = new SimpleDateFormat("dd-MM-yyyy").parse(previousDate)
+    return currentTimeFormat - oldDate
+}
+
 pipeline {
     agent any
 
@@ -159,14 +166,6 @@ pipeline {
         stage("Test-EPIC-Journal_Suivi"){
             steps{
                 script{
-
-                    def getRemainingDays(previousDate){
-                        def currentDate = new Date()
-                        String currentTimeFormat = currentDate.format("dd-MM-yyyy")
-                        def oldDate = new SimpleDateFormat("dd-MM-yyyy").parse(previousDate)
-                        return currentTimeFormat - oldDate
-                    }
-                    
                     float poids_actuel = "${params.POIDS_ACTUEL}" as float
                     float eau_conso = "${params.LITRES_EAU}" as float
 
