@@ -181,9 +181,11 @@ pipeline {
 
                     echo today.toString()
 
-                    def jours_suivis = today - debut_prog
+                    use(groovy.time.TimeCategory){
+                        def jours_suivis = today - debut_prog
+                    }
 
-                    echo jours_suivis
+                    echo jours_suivis.days
                     
                     //use(groovy.time.TimeCategory){
                         //def jours_suivis = today - debut_prog
