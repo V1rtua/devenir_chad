@@ -182,7 +182,6 @@ pipeline {
 
                     // Récupération du nombre de jours suivis du programme
                     def jours_suivis = today - date_debut
-                    jours_suivis as Integer
                     Integer jours_restants = 90 - jours_suivis
 
                     echo "Vous avez suivi $jours_suivis jours du programme, continuez comme ça !"
