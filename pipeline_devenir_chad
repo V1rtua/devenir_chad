@@ -176,15 +176,14 @@ pipeline {
 
                     echo "Suivi du programme"
 
-                    echo today.toString()
-
                     today = today.format("dd-MM-yyyy")
 
                     echo today.toString()
+                    echo date_debut.toString()
                     
-                    Integer jours_suivis = today - today
+                    def jours_suivis = today - date_debut
 
-                    echo today.toString
+                    echo jours_suivis.toString()
 
                     // Suivi de l'hydratation
 
