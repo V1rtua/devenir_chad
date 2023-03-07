@@ -150,7 +150,7 @@ pipeline {
                         }
                     }
 
-                    if (premiere_inscription == false){
+                    if (premiere_inscription == "false"){
                         echo "Votre avis est important, quelle note donneriez-vous à notre application ?"
                     }
 
