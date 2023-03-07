@@ -124,7 +124,6 @@ pipeline {
                     }
 
                     // Calcul permettant de déterminer le nombre de calories à perdre quotidiennement pour atteindre l'objectif
-
                     if (type_regime == "Modéré"){
                         if (256 * 90 < poids_a_perdre * 7680){
                             if (512 * 90 >= poids_a_perdre * 7680){
@@ -163,22 +162,47 @@ pipeline {
                 script{
                     float poids_actuel = "${params.POIDS_ACTUEL}" as float
                     float eau_conso = "${params.LITRES_EAU}" as float
+
+                    // Recommandation consommation eau : 35 ml par kg
                     float eau_recom = 0.035 * poids_actuel
 
+                    float sommeil = "${params.SOMMEIL}" as float
 
+                    // Suivi de l'hydratation
+
+                    // Si la consommation quotidienne est inférieure aux recommandations
                     if (eau_recom > eau_conso){
-                        echo "Votre consommation d'eau quotidienne $eau_conso n'est pas suffisante"
+                        echo "Votre consommation d'eau quotidienne n'est pas suffisante"
                         echo "Consommation d'eau quotidienne recommandée : $eau_recom Litres"
                     }
+
+                    // Si la consommation quotidienne est largement supérieure aux recommandations
                     else if (eau_recom * 1.5 <= eau_conso){
                         echo "Vous consommez trop d'eau quotidiennement"
                         echo "Consommation d'eau quotidienne recommandée : $eau_recom Litres"
 
                     }
+
+                    // Si la consommation est égale ou légerment supérieure aux recommandations
                     else{
                         echo "Votre consommation d'eau quotidienne est suffisante"
                         echo "Consommation d'eau quotidienne recommandée : $eau_recom Litres"
                     }
+                    
+                    // Suivi du sommeil
+                    if (sommeil < 7){
+                        echo "Votre temps de sommeil est insuffisant"
+                        echo "Temps de sommeil conseillé : 7 à 10 heures"
+                    }
+                    else if (sommeil > 10){
+                        echo "Votre temps de sommeil est trop important"
+                        echo "Temps de sommeil conseillé : 7 à 10 heures"
+                    }
+                    else {
+                        echo "Votre temps de sommeil est correct"
+                        echo "Temps de sommeil conseillé : 7 à 10 heures"
+                    }
+
                 }
             }
         }
