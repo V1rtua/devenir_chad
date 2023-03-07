@@ -1,7 +1,7 @@
 import java.text.SimpleDateFormat
 
 // Fonction pour récupérer le nombre de jours passés avec le programme
-def getRemainingDays(previousDate){
+public def getRemainingDays(previousDate){
     def currentDate = new Date()
     String currentTimeFormat = currentDate.format("yyyy-MM-dd")
     def oldDate = new SimpleDateFormat("yyyy-MM-dd").parse(previousDate)
