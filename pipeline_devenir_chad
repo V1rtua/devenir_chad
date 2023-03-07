@@ -163,7 +163,7 @@ pipeline {
                 script{
                     float poids_actuel = "${params.POIDS_ACTUEL}" as float
                     float eau_conso = "${params.LITRES_EAU}" as float
-                    def debut_prog = "${params.DEBUT_PROG}"
+                    def debut_prog = "${params.DEBUT_PROG}" as Date
                     def today = new Date()
 
                     // Recommandation consommation eau : 35 ml par kg
@@ -180,12 +180,10 @@ pipeline {
                     today = today.format("dd-MM-yyyy")
 
                     echo today.toString()
+                    
+                    Integer jours_suivis = today - debut_prog
 
-                    use(groovy.time.TimeCategory){
-                        def jours_suivis = today - debut_prog
-                    }
-
-                    echo jours_suivis.days
+                    echo jours_suivis
                     
                     //use(groovy.time.TimeCategory){
                         //def jours_suivis = today - debut_prog
