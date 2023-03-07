@@ -83,43 +83,34 @@ pipeline {
                     echo "Bonjour $prenom, prêt à reprendre votre vie en main ?"
 
                     // Calcul des besoins en calories du métabolisme de base pour une femme
-
                     if (sexe == "Femme"){
                         float metabolisme = 9740 * poids_actuel + 172.9 * taille / 100 - 4.737 * age + 667.051
-                        echo metabolisme.toString()
 
                         // Calcul des besoins en calories en prenant en compte le niveau d'activité pour une Femme
                         if (activite == "Sédentaire"){
                             besoin_calories = metabolisme * 1.55
-                            echo besoin_calories.toString()
                         }
                         else if (activite == "Normal") {
                             besoin_calories = metabolisme * 1.78
-                            echo besoin_calories.toString()
                         }
                         else {
                             besoin_calories = metabolisme * 2.10
-                            echo besoin_calories.toString()
                         }
                     }
 
                     // Calcul des besoins en calories du métabolisme de base pour un Homme
                     else {
                         float metabolisme = 13.707 * poids_actuel + 492.3 * taille / 100 - 6.673 * age + 77.607
-                        echo metabolisme.toString()
 
                         // Calcul des besoins en calories en prenant en compte le niveau d'activité pour un Homme
                         if (activite == "Sédentaire"){
                             besoin_calories = metabolisme * 1.56
-                            echo besoin_calories.toString()
                         }
                         else if (activite == "Normal") {
                             besoin_calories = metabolisme * 1.64
-                            echo besoin_calories.toString()
                         }
                         else {
                             besoin_calories = metabolisme * 1.82
-                            echo besoin_calories.toString()
                         }
                     }
 
@@ -133,7 +124,7 @@ pipeline {
                             echo "Votre objectif est impossible à atteindre dans le temps donné"
                             }  
                         }
-                        else if (256 * 90 >= poids_a_perdre * 7680){
+                        else {
                             obj_calories = besoin_calories - 256
                             echo "Pour atteindre votre objectif, vous devez consommmer $obj_calories calories par jour pour perdre $poids_a_perdre kg en 3 mois"
                         }
