@@ -177,6 +177,7 @@ pipeline {
                     echo "Suivi du programme"
 
                     today = today.format("dd-MM-yyyy")
+                    date_debut = date_debut.format("dd-MM-yyyy")
 
                     echo today.toString()
                     echo date_debut.toString()
