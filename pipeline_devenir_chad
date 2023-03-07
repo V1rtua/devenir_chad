@@ -67,15 +67,15 @@ pipeline {
                     Integer taille = "${params.TAILLE}" as Integer
                     Integer age = "${params.AGE}" as Integer
                     def premiere_inscription = "${params.PREMIERE_INSCRIPTION}"
-                    Integer poids_actuel = "${params.POIDS_ACTUEL}" as Integer
+                    float poids_actuel = "${params.POIDS_ACTUEL}" as float
                     def activite = "${params.ACTIVITE}"
                     def type_regime = "${params.TYPE_REGIME}"
-                    Integer objectif_poids = "${params.OBJECTIF_POIDS}" as Integer
+                    float objectif_poids = "${params.OBJECTIF_POIDS}" as float
                     
 
                     float besoin_calories
-                    Integer poids_a_perdre = poids_actuel - objectif_poids
-                    Integer obj_calories
+                    float poids_a_perdre = poids_actuel - objectif_poids
+                    float obj_calories
                 
 
                     // Message de bienvenue
@@ -155,6 +155,29 @@ pipeline {
                     }
 
 
+                }
+            }
+        }
+        stage("Test-EPIC-Journal_Suivi"){
+            steps{
+                script{
+                    float poids_actuel = "${params.POIDS_ACTUEL}" as float
+                    float eau_conso = "${params.LITRES_EAU}" as float
+                    float eau_recom = 0.035 * poids_actuel
+
+                    if (0.035 * poids_actuel > eau_conso){
+                        echo "Votre consommation d'eau quotidienne n'est pas suffisante"
+                        echo "Consommation d'eau quotidienne recommandée : $eau_recom Litres"
+                    }
+                    else if (0.035 * poids_actuel * 1.5 <= eau_conso){
+                        echo "Vous consommez trop d'eau quotidiennement"
+                        echo "Consommation d'eau quotidienne recommandée : $eau_recom Litres"
+
+                    }
+                    else{
+                        echo "Votre consommation d'eau quotidienne est suffisante"
+                        echo "Consommation d'eau quotidienne recommandée : $eau_recom Litres"
+                    }
                 }
             }
         }
