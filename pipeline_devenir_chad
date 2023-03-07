@@ -165,7 +165,7 @@ pipeline {
                     float eau_conso = "${params.LITRES_EAU}" as float
                     def debut_prog = "${params.DEBUT_PROG}"
                     def today = new Date()
-                    def date_debut = new SimpleDateFormat("dd-MM-yyyy").parse(debut_prog)
+                    def date_debut = new SimpleDateFormat("yyyy-MM-dd").parse(debut_prog)
 
                     // Recommandation consommation eau : 35 ml par kg
                     float eau_recom = 0.035 * poids_actuel
@@ -175,9 +175,6 @@ pipeline {
                     // Suivi du programme
 
                     echo "Suivi du programme"
-
-                    today = today.format("dd-MM-yyyy")
-                    date_debut = date_debut.format("dd-MM-yyyy")
 
                     echo today.toString()
                     echo date_debut.toString()
