@@ -182,9 +182,7 @@ pipeline {
 
                     echo today.toString()
                     
-                    Integer jours_suivis = today - date_debut
-
-                    echo jours_suivis
+                    echo Math.abs(today - date_debut)
                     
                     //use(groovy.time.TimeCategory){
                         //def jours_suivis = today - debut_prog
