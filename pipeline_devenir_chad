@@ -1,5 +1,6 @@
 import java.text.SimpleDateFormat
 
+// Fonction pour récupérer le nombre de jours passés avec le programme
 def getRemainingDays(previousDate){
     def currentDate = new Date()
     String currentTimeFormat = currentDate.format("dd-MM-yyyy")
@@ -7,10 +8,11 @@ def getRemainingDays(previousDate){
     return currentTimeFormat - oldDate
 }
 
+float obj_calories
+float poids_a_perdre
+
 pipeline {
     agent any
-
-    // Fonction pour récupérer le nombre de jours passés avec le programme
 
     parameters {
         string(name: "NOM", description: "Veuillez entrer votre nom")
@@ -87,8 +89,7 @@ pipeline {
                     
 
                     float besoin_calories
-                    float poids_a_perdre = poids_actuel - objectif_poids
-                    float obj_calories
+                    poids_a_perdre = poids_actuel - objectif_poids
                 
 
                     // Message de bienvenue
@@ -155,6 +156,8 @@ pipeline {
                         }
                     }
 
+                    echo "Feedback :"
+
                     if (premiere_inscription == "false"){
                         echo "Votre avis est important, quelle note donneriez-vous à notre application ?"
                     }
@@ -168,11 +171,19 @@ pipeline {
                 script{
                     float poids_actuel = "${params.POIDS_ACTUEL}" as float
                     float eau_conso = "${params.LITRES_EAU}" as float
+                    def debut_prog = "${params.DEBUT_PROG}"
 
                     // Recommandation consommation eau : 35 ml par kg
                     float eau_recom = 0.035 * poids_actuel
 
                     float sommeil = "${params.SOMMEIL}" as float
+
+                    // Suivi du programme
+
+                    echo "Suivi du programme"
+                    
+                    def jours_suivis = getRemainingDays(debut_prog) as Integer
+                    Integer jours_restants = 90  - jours_suivis
 
                     // Suivi de l'hydratation
 
