@@ -182,7 +182,7 @@ pipeline {
 
                     echo "Suivi du programme"
                     
-                    def jours_suivis = getRemainingDays(debut_prog) as Integer
+                    def jours_suivis = getRemainingDays(debut_prog)
                     Integer jours_restants = 90  - jours_suivis
 
                     // Suivi de l'hydratation
