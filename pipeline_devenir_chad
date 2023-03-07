@@ -182,10 +182,18 @@ pipeline {
 
                     // Récupération du nombre de jours suivis du programme
                     def jours_suivis = today - date_debut
+                    jours_suivis as Integer
                     Integer jours_restants = 90 - jours_suivis
 
-                    echo "Vous avez suivi $jours_suivis jours du programme, continuez comme ça !"
-                    echo "Il reste $jours_restants jours pour ce programme, n'abandonnez pas !"
+                    // Si il reste des jours au programme
+                    if (jours_restants > 0){
+                        echo "Vous avez suivi $jours_suivis jours du programme, continuez comme ça !"
+                        echo "Il reste $jours_restants jours pour ce programme, n'abandonnez pas !"
+                    }
+                    // Si il n'y a plus de jours au programme
+                    else {
+                        echo "Vous avez fini le programme !"
+                    }
 
                     // Suivi de l'hydratation
 
