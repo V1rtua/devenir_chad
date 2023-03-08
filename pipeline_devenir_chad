@@ -1,5 +1,6 @@
 import java.text.SimpleDateFormat
 
+
 float obj_calories
 float besoin_calories
 
@@ -45,6 +46,7 @@ pipeline {
 
                 echo "Construction de l'EPIC : Journal de suivi du poids"
                 echo "Construction de l'US : Vérification du respect de l'objectif du programme"
+                echo "Construction de l'US : Suivi de l'IMC"
                 echo "Construction de l'US : Proposer des repas sains"
                 echo "Construction de l'US : Prévenir du grignotage"
                 echo "Construction de l'US : Suivi de l'hydratation"
@@ -224,6 +226,8 @@ pipeline {
                             echo "Dommage, vous n'avez pas atteint votre objectif d'atteindre $objectif_poids kg en 3 mois!"
                         }
                     }
+
+                    // Suivi de l'IMC
 
                     // Suivi de l'hydratation
 
