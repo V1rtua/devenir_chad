@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat
 
 float obj_calories
 float besoin_calories
+def imc
 
 pipeline {
     agent any
@@ -31,6 +32,12 @@ pipeline {
     }
 
     stages {
+        stage("DEPLOY"){
+            steps{
+                // Script python permettant de récupérer l'IMC
+                imc = sh "python3 ./calcul-imc.py"
+            }
+        }
         stage ("Build-EPIC_US") {
             steps {
                 // Construction des EPIC et des US
@@ -228,6 +235,10 @@ pipeline {
                     }
 
                     // Suivi de l'IMC
+
+                    echo "Suivi de l'IMC :"
+
+                    echo imc
 
                     // Suivi de l'hydratation
 
