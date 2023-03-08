@@ -7,10 +7,10 @@ def calculIMC(taille_cm,poids):
 if __name__=='__main__':
         parser = argparse.ArgumentParser(description='Calcul de l\'IMC')
         parser.add_argument('taille', type=float, help='Taille en centimètres')
-        parser.add_argument('poids', type=float, help='Poids en kilogrammes')
+        parser.add_argument('poids_actuel', type=float, help='Poids en kilogrammes')
         args = parser.parse_args()
 
-imc = calculIMC(args.taille,args.poids)
+imc = calculIMC(args.taille,args.poids_actuel)
 
 if imc < 16.5:
     print("Votre IMC : ",imc,". Vous souffrez d'insuffisance pondérale sévère.")
