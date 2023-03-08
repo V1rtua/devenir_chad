@@ -167,7 +167,9 @@ pipeline {
         stage("Test-EPIC-Journal_Suivi"){
             steps{
                 script{
+                    float poids_base = "${params.POIDS_BASE}"
                     float poids_actuel = "${params.POIDS_ACTUEL}" as float
+                    float poids_perdu = poids_base - poids_actuel
                     float eau_conso = "${params.LITRES_EAU}" as float
                     def debut_prog = "${params.DEBUT_PROG}"
 
@@ -196,6 +198,7 @@ pipeline {
                     if (jours_restants > 0){
                         echo "Vous avez suivi $jours_suivis jours du programme, continuez comme ça !"
                         echo "Il reste $jours_restants jours pour ce programme, n'abandonnez pas !"
+                        echo "Vous avez perdu $poids_perdu kg depuis le début de ce programme"
 
                         if (type_regime == "Modéré"){
                             if (256 * jours_restants < poids_a_perdre * 7680){
