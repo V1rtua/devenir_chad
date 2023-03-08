@@ -246,11 +246,7 @@ pipeline {
 
                     echo "Prévention du grignotage :"
 
-                    echo "Le grignotage est néfaste pour votre santé : "\n"
-                    - il déséquilibre votre alimentation et pertube la digestion "\n"
-                    - il est mauvais pour votre dentition et votre foie "\n"
-                    - il favorise le diabète et les maladies cardiovasculaires "\n"
-                    - il développe ou entretien votre cellulite"
+                    echo "Le grignotage est néfaste pour votre santé : il déséquilibre votre alimentation et pertube la digestion, il est mauvais pour votre dentition et votre foie, il favorise le diabète et les maladies cardiovasculaires, il développe ou entretien votre cellulite"
 
                     // Suivi de l'hydratation
 
