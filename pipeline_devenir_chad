@@ -308,7 +308,7 @@ pipeline {
 
                     if (type_abonnement == "Prenium"){
                         // Mise en relation avec des salles de sport
-                        if (salle = "true"){
+                        if (salle == "true"){
                             echo "Mise en relation avec nos salles de sport partenaires :"
                             echo "Grâce à votre abonnement Prenium, vous bénéficiez d'un abonnement spécial avec nos salles de sport partenaires ! Vous pouvez décider d'être suivi par un coach."
                             echo "L'abonnement spécial est disponible chez : Fitness Park, Basic-Fit, Magic Form, GigaFit, On Air"
