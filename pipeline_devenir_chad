@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat
 
 float obj_calories
+float besoin_calories
 
 pipeline {
     agent any
@@ -78,8 +79,6 @@ pipeline {
                     def type_regime = "${params.TYPE_REGIME}"
                     float objectif_poids = "${params.OBJECTIF_POIDS}" as float
                     
-
-                    float besoin_calories
                     poids_a_perdre = poids_actuel - objectif_poids
                 
 
@@ -147,9 +146,8 @@ pipeline {
                         }
                     }
 
-                    echo "Feedback :"
-
                     if (premiere_inscription == "false"){
+                        echo "Feedback :"
                         echo "Votre avis est important, quelle note donneriez-vous à notre application ?"
                     }
 
@@ -189,10 +187,42 @@ pipeline {
                     if (jours_restants > 0){
                         echo "Vous avez suivi $jours_suivis jours du programme, continuez comme ça !"
                         echo "Il reste $jours_restants jours pour ce programme, n'abandonnez pas !"
+
+                        if (type_regime == "Modéré"){
+                            if (256 * jours_restants < poids_a_perdre * 7680){
+                                echo "Vous n'êtes pas en bonne voie pour atteindre votre objectif"
+                                if (512 * jours_restants >= poids_a_perdre * 7680){
+                                    echo "Vous pouvez passer sur le régime Strict pour rattraper votre retard"
+                                    obj_calories = besoin_calories - 512
+                                    echo "Votre nouvel objectif calorique quotidien est : $obj_calories calories"
+                                }
+                                else {
+                                    echo "Vous ne pourrez pas atteindre votre objectif dans le temps restant"
+                                }
+                            }
+                            else{
+                                echo "Vous êtes en bonne voie pour réussir le programme, continuez comme ça !"
+                            }
+                            
+                        }
+                        if (type_regime == "Strict"){
+                            if (512 * jours_restants < poids_a_perdre * 7680){
+                                echo "Vous ne pourrez pas atteindre votre objectif dans le temps restant"
+                            }
+                            else {
+                                echo "Vous êtes en bonne voie pour réussir le programme, continuez comme ça !"
+                            }
+                        }
                     }
                     // Si il n'y a plus de jours au programme
                     else {
                         echo "Vous avez fini le programme !"
+                        if (poids_actuel =< objectif_poids){
+                            echo "Bravo, vous avez atteint votre objectif d'atteindre $objectif_poids kg en 3 mois !"
+                        }
+                        else{
+                            echo "Dommage, vous n'avez pas atteint votre objectif d'atteindre $objectif_poids kg en 3 mois!"
+                        }
                     }
 
                     // Suivi de l'hydratation
