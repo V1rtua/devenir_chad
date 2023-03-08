@@ -303,7 +303,7 @@ pipeline {
                     def accompagnement = "${params.ACCOMPAGNEMENT}"
 
                     // Conseiller activités physiques
-                    echo "Activités physiques conseillées"
+                    echo "Activités physiques conseillées :"
                     echo "Soyez actif au moins 2 heures et demie par semaine pour en retirer des bienfaits pour la santé, Mettez l’accent sur l’activité aérobique d’intensité modérée à élevée répartie tout au long de la semaine en séances de dix minutes ou plus chacune, Améliorez votre tonus en ajoutant, au moins deux jours par semaine, des activités qui travaillent les muscles et les os"
 
                     if (type_abonnement == "Prenium"){
