@@ -161,8 +161,6 @@ pipeline {
                         echo "Feedback :"
                         echo "Votre avis est important, quelle note donneriez-vous à notre application ?"
                     }
-
-
                 }
             }
         }
@@ -242,6 +240,12 @@ pipeline {
 
                     echo imc
 
+                    // Proposer des repas sains
+
+                    echo "Proposition de repas sains : "
+
+                    echo "Un repas équilibré doit être composé de : Légumes cuits ou crus (la moitié de l’assiette), Céréales complètes (riz brun, quinoa, sarrasin…), Protéines animales ou végétales (viande, poisson, oeufs, légumineuses…), Bonnes graisses (huile de coco, d’olive) en assaisonnement ou pour la cuisson,  Épices et herbes aromatiques pour ajouter du goût et des nutriments (curcuma, poivre, sel, curry, thym, persil), Eau"
+
                     // Prévention du grignotage
 
                     echo "Prévention du grignotage :"
@@ -288,6 +292,34 @@ pipeline {
                         echo "Temps de sommeil conseillé : 7 à 10 heures"
                     }
 
+                }
+            }
+        }
+        stage("Test-EPIC-Rapport_calorique"){
+            steps{
+                script{
+                    def type_abonnement = "${params.TYPE_ABONNEMENT}"
+                    def salle = "${params.SALLE}"
+                    def accompagnement = "${params.ACCOMPAGNEMENT}"
+
+                    // Conseiller activités physiques
+                    echo "Activités physiques conseillées"
+                    echo "Soyez actif au moins 2 heures et demie par semaine pour en retirer des bienfaits pour la santé, Mettez l’accent sur l’activité aérobique d’intensité modérée à élevée répartie tout au long de la semaine en séances de dix minutes ou plus chacune, Améliorez votre tonus en ajoutant, au moins deux jours par semaine, des activités qui travaillent les muscles et les os"
+
+                    if (type_abonnement == "Prenium"){
+                        // Mise en relation avec des salles de sport
+                        if (salle = "true"){
+                            echo "Mise en relation avec nos salles de sport partenaires :"
+                            echo "Grâce à votre abonnement Prenium, vous bénéficiez d'un abonnement spécial avec nos salles de sport partenaires ! Vous pouvez décider d'être suivi par un coach."
+                            echo "L'abonnement spécial est disponible chez : Fitness Park, Basic-Fit, Magic Form, GigaFit, On Air"
+                        }
+                        // Mise en relation avec des diététiciens et des nutritionnistes
+                        if (accompagnement == "true"){
+                            echo "Mise en relation avec des diététiciens et des nutritionnistes"
+                            echo "Grâce à votre abonnement Premium, vous bénificiez d'un abonnement spécial avec nos experts en alimentation partenaires ! Vous pouvez décider d'être suivi par un diètéticien ou un nutritionniste"
+                            echo "Listes des nutritionnistes / diététiciens partenaires : SmartDiet (entreprise), Daniel Monnier, Donation de Montazac, Fabien Torez, Virginie Marechal, Emmanuel-Jean Reynaud"
+                        }
+                    }
                 }
             }
         }
