@@ -217,7 +217,7 @@ pipeline {
                     // Si il n'y a plus de jours au programme
                     else {
                         echo "Vous avez fini le programme !"
-                        if (poids_actuel =< objectif_poids){
+                        if (poids_actuel <= objectif_poids){
                             echo "Bravo, vous avez atteint votre objectif d'atteindre $objectif_poids kg en 3 mois !"
                         }
                         else{
