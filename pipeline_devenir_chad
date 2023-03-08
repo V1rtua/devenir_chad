@@ -36,7 +36,7 @@ pipeline {
             steps{
                 script{
                     // Script python permettant de récupérer l'IMC
-                    imc = sh "python3 ./calcul-imc.py ${params.TAILLE}${params.POIDS_ACTUEL}"
+                    imc = sh "python3 ./calcul-imc.py ${params.TAILLE}"
                 }
             }
         }
