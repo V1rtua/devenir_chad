@@ -167,7 +167,7 @@ pipeline {
         stage("Test-EPIC-Journal_Suivi"){
             steps{
                 script{
-                    float poids_base = "${params.POIDS_BASE}"
+                    float poids_base = "${params.POIDS_BASE}" as float
                     float poids_actuel = "${params.POIDS_ACTUEL}" as float
                     float poids_perdu = poids_base - poids_actuel
                     float eau_conso = "${params.LITRES_EAU}" as float
