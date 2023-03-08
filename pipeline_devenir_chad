@@ -34,8 +34,10 @@ pipeline {
     stages {
         stage("DEPLOY"){
             steps{
-                // Script python permettant de récupérer l'IMC
-                imc = sh "python3 ./calcul-imc.py"
+                script{
+                    // Script python permettant de récupérer l'IMC
+                    imc = sh "python3 ./calcul-imc.py"
+                }
             }
         }
         stage ("Build-EPIC_US") {
