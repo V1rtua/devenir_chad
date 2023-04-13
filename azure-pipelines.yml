@@ -1,0 +1,330 @@
+import java.text.SimpleDateFormat
+
+
+float obj_calories
+float besoin_calories
+def imc
+
+pipeline {
+    agent any
+
+    parameters {
+        string(name: "NOM", description: "Veuillez entrer votre nom")
+        string(name: "PRENOM", description: "Veuillez entrer votre prénom")
+        choice(name: "SEXE", choices: ["Homme","Femme","Chad"], description: "Veuillez choisir votre sexe")
+        string(name: "TAILLE", description: "Veuillez entre votre taille en centimètres")
+        string(name: "AGE", description: "Veuillez entrer votre âge")
+        booleanParam(name: "PREMIERE_INSCRIPTION", description: "Est-ce votre première inscription ?")
+        choice(name: "TYPE_ABONNEMENT", choices:["Basic","Prenium"], description: "Veuillez sélectionner l'abonnement que vous souhaitez prendre. L'abonnement Prenium inclut la mise en relation avec des salles de sport et des ditéticiens ainsi que les challenges mensuels.")
+        string(name: "POIDS_BASE", description: "Veuillez entrer votre poids au moment du commencement du programme" )
+        string(name: "POIDS_ACTUEL", description: "Veuillez entrer votre poids actuel. si c'est votre première inscription le poids est identique au poids de base")
+        string(name: "OBJECTIF_POIDS", description: "Veuillez entrer votre objectif en terme de poids")
+        choice(name: "ACTIVITE", choices: ["Sédentaire","Normal","Actif"], description: "Veuillez indiquer votre activité quotidienne")
+        string(name: "DEBUT_PROG", defaultValue: "2023-01-01", description: "Veuillez entrer la date de début de votre programme")
+        choice(name: "TYPE_REGIME", choices: ["Strict","Modéré"], description: "Veuillez sélectionner le type de régime souhaité")
+        string(name: "SOMMEIL", description: "Veuillez indiquer le nombre d'heures de sommeil moyen que vous avez")
+        string(name: "LITRES_EAU", description: "Veuillez indiquer le nombre de litres d'eau bu en moyenne par jour")
+        booleanParam(name: "ACTIVITE_PHYS", description: "Veuillez indiquez si vous pratiquer une activité physique")
+        choice(name: "NB_ACTIVITE", choices: ["0","1","2","3","4","5","6","7"], description: "Si oui, indiquez le nombre de jours par semaine dans lesquels vous pratiquez une activité physique")
+        choice(name: "NB_FL", choices: ["0","1","2","3","4","5"], description: "Veuillez indiquer le nombre de fruits et légumes que vous consommez par jour")
+        booleanParam(name: "ACCOMPAGNEMENT", description: "Souhaitez-vous être accompagné par un diététicien ou un nutritionniste ?")
+        booleanParam(name: "SALLE", description: "Souhaitez vous adhérer à une des salles de sport de nos partenaires ?")
+    }
+
+    stages {
+        stage("DEPLOY"){
+            steps{
+                script{
+                    // Script python permettant de récupérer l'IMC
+                    imc = sh (script:"python3 ./calcul-imc.py ${params.TAILLE} ${params.POIDS_ACTUEL}",returnStdout: true).trim()
+                }
+            }
+        }
+        stage ("Build-EPIC_US") {
+            steps {
+                // Construction des EPIC et des US
+
+                echo "Construction de l'EPIC : Programme sur 3 mois"
+                echo "Construction de l'US : Définir un objectif de poids"
+                echo "Construction de l'US : Définir un nombre de calories à consommer"
+                echo "Construction de l'US : Questionnaire sur les habitudes quotidiennes"
+                echo "Construction de l'US : Différents types d'abonnement"
+                echo "Construction de l'US : Feedback"
+
+                sleep 5
+
+                echo "Construction de l'EPIC : Journal de suivi du poids"
+                echo "Construction de l'US : Vérification du respect de l'objectif du programme"
+                echo "Construction de l'US : Suivi de l'IMC"
+                echo "Construction de l'US : Proposer des repas sains"
+                echo "Construction de l'US : Prévenir du grignotage"
+                echo "Construction de l'US : Suivi de l'hydratation"
+                echo "Construction de l'US : Suivi du sommeil"
+
+                sleep 5
+
+                echo "Construction de l'EPIC : Rapport calorique"
+                echo "Construction de l'US : Conseiller des activités physiques"
+                echo "Construction de l'US : Mettre en relation avec des salles de sport"
+                echo "Construction de l'US : Mettre en relation avec des experts en alimentation"
+
+                sleep 5
+
+                echo "Construction de l'EPIC : Challenges Mensuels"
+            }
+        }
+        stage ("Test-EPIC-Programme_3_mois"){
+            steps{
+                script {
+
+                    // Variables qui récupère les informations rentrées en paramètres par l'utilisateur
+
+                    def nom = "${params.NOM}"
+                    def prenom = "${params.PRENOM}"
+                    def sexe = "${params.SEXE}"
+                    Integer taille = "${params.TAILLE}" as Integer
+                    Integer age = "${params.AGE}" as Integer
+                    def premiere_inscription = "${params.PREMIERE_INSCRIPTION}"
+                    float poids_actuel = "${params.POIDS_ACTUEL}" as float
+                    def activite = "${params.ACTIVITE}"
+                    def type_regime = "${params.TYPE_REGIME}"
+                    float objectif_poids = "${params.OBJECTIF_POIDS}" as float
+                    
+                    poids_a_perdre = poids_actuel - objectif_poids
+                
+
+                    // Message de bienvenue
+
+                    echo "Bonjour $prenom, prêt à reprendre votre vie en main ?"
+
+                    // Calcul des besoins en calories du métabolisme de base pour une femme
+                    if (sexe == "Femme"){
+                        float metabolisme = 9740 * poids_actuel + 172.9 * taille / 100 - 4.737 * age + 667.051
+
+                        // Calcul des besoins en calories en prenant en compte le niveau d'activité pour une Femme
+                        if (activite == "Sédentaire"){
+                            besoin_calories = metabolisme * 1.55
+                        }
+                        else if (activite == "Normal") {
+                            besoin_calories = metabolisme * 1.78
+                        }
+                        else {
+                            besoin_calories = metabolisme * 2.10
+                        }
+                    }
+
+                    // Calcul des besoins en calories du métabolisme de base pour un Homme
+                    else {
+                        float metabolisme = 13.707 * poids_actuel + 492.3 * taille / 100 - 6.673 * age + 77.607
+
+                        // Calcul des besoins en calories en prenant en compte le niveau d'activité pour un Homme
+                        if (activite == "Sédentaire"){
+                            besoin_calories = metabolisme * 1.56
+                        }
+                        else if (activite == "Normal") {
+                            besoin_calories = metabolisme * 1.64
+                        }
+                        else {
+                            besoin_calories = metabolisme * 1.82
+                        }
+                    }
+
+                    echo "Objectif calorique quotidien :"
+
+                    // Calcul permettant de déterminer le nombre de calories à perdre quotidiennement pour atteindre l'objectif
+                    if (type_regime == "Modéré"){
+                        if (256 * 90 < poids_a_perdre * 7680){
+                            if (512 * 90 >= poids_a_perdre * 7680){
+                            echo "Avec le régime "Modéré" vous ne pourrez pas atteindre votre objectif, toutefois si vous optez pour le type de régime 'Strict', vous pourrez atteindre votre objectif de perte de poids de $poids_a_perdre kg en 3 mois"
+                            }
+                            else {
+                            echo "Votre objectif est impossible à atteindre dans le temps donné"
+                            }  
+                        }
+                        else {
+                            obj_calories = besoin_calories - 256
+                            echo "Pour atteindre votre objectif, vous devez consommmer $obj_calories calories par jour pour perdre $poids_a_perdre kg en 3 mois"
+                        }
+                    }
+
+                    if (type_regime == "Strict"){
+                        if (512 * 90 < poids_a_perdre * 7680){
+                            echo "Votre objectif est impossible à atteindre dans le temps donné"
+                        }
+                        else {
+                            obj_calories = besoin_calories - 512
+                            echo "Pour atteindre votre objectif, vous devez consommer $obj_calories calories par jour pour perdre $poids_a_perdre kg en 3 mois" 
+                        }
+                    }
+
+                    if (premiere_inscription == "false"){
+                        echo "Feedback :"
+                        echo "Votre avis est important, quelle note donneriez-vous à notre application ?"
+                    }
+                }
+            }
+        }
+        stage("Test-EPIC-Journal_Suivi"){
+            steps{
+                script{
+                    float poids_base = "${params.POIDS_BASE}" as float
+                    float poids_actuel = "${params.POIDS_ACTUEL}" as float
+                    float poids_perdu = poids_base - poids_actuel
+                    float eau_conso = "${params.LITRES_EAU}" as float
+                    def debut_prog = "${params.DEBUT_PROG}"
+
+                    // Recommandation consommation eau : 35 ml par kg
+                    float eau_recom = 0.035 * poids_actuel
+
+                    float sommeil = "${params.SOMMEIL}" as float
+
+                    def today = new Date()
+                    def date_debut = new SimpleDateFormat("yyyy-MM-dd").parse(debut_prog)
+
+                    float objectif_poids = "${params.OBJECTIF_POIDS}" as float
+                    float poids_a_perdre = poids_actuel - objectif_poids
+                    def type_regime = "${params.TYPE_REGIME}"
+
+                    // Suivi du programme
+
+                    echo "Suivi du programme"
+
+                    // Récupération du nombre de jours suivis du programme
+                    def jours_suivis = today - date_debut
+                    jours_suivis as Integer
+                    Integer jours_restants = 90 - jours_suivis
+
+                    // Si il reste des jours au programme
+                    if (jours_restants > 0){
+                        echo "Vous avez suivi $jours_suivis jours du programme, continuez comme ça !"
+                        echo "Il reste $jours_restants jours pour ce programme, n'abandonnez pas !"
+                        echo "Vous avez perdu $poids_perdu kg depuis le début de ce programme"
+
+                        if (type_regime == "Modéré"){
+                            if (256 * jours_restants < poids_a_perdre * 7680){
+                                echo "Vous n'êtes pas en bonne voie pour atteindre votre objectif"
+                                if (512 * jours_restants >= poids_a_perdre * 7680){
+                                    echo "Vous pouvez passer sur le régime Strict pour rattraper votre retard"
+                                    obj_calories = besoin_calories - 512
+                                    echo "Votre nouvel objectif calorique quotidien est : $obj_calories calories"
+                                }
+                                else {
+                                    echo "Vous ne pourrez pas atteindre votre objectif dans le temps restant"
+                                }
+                            }
+                            else{
+                                echo "Vous êtes en bonne voie pour réussir le programme, continuez comme ça !"
+                            }
+                            
+                        }
+                        if (type_regime == "Strict"){
+                            if (512 * jours_restants < poids_a_perdre * 7680){
+                                echo "Vous ne pourrez pas atteindre votre objectif dans le temps restant"
+                            }
+                            else {
+                                echo "Vous êtes en bonne voie pour réussir le programme, continuez comme ça !"
+                            }
+                        }
+                    }
+                    // Si il n'y a plus de jours au programme
+                    else {
+                        echo "Vous avez fini le programme !"
+                        if (poids_actuel <= objectif_poids){
+                            echo "Bravo, vous avez atteint votre objectif d'atteindre $objectif_poids kg en 3 mois !"
+                        }
+                        else{
+                            echo "Dommage, vous n'avez pas atteint votre objectif d'atteindre $objectif_poids kg en 3 mois!"
+                        }
+                    }
+
+                    // Suivi de l'IMC
+
+                    echo "Suivi de l'IMC :"
+
+                    echo imc
+
+                    // Proposer des repas sains
+
+                    echo "Proposition de repas sains : "
+
+                    echo "Un repas équilibré doit être composé de : Légumes cuits ou crus (la moitié de l’assiette), Céréales complètes (riz brun, quinoa, sarrasin…), Protéines animales ou végétales (viande, poisson, oeufs, légumineuses…), Bonnes graisses (huile de coco, d’olive) en assaisonnement ou pour la cuisson,  Épices et herbes aromatiques pour ajouter du goût et des nutriments (curcuma, poivre, sel, curry, thym, persil), Eau"
+
+                    // Prévention du grignotage
+
+                    echo "Prévention du grignotage :"
+
+                    echo "Le grignotage est néfaste pour votre santé : il déséquilibre votre alimentation et pertube la digestion, il est mauvais pour votre dentition et votre foie, il favorise le diabète et les maladies cardiovasculaires, il développe ou entretien votre cellulite"
+
+                    // Suivi de l'hydratation
+
+                    echo "Suivi hydratation :"
+
+                    // Si la consommation quotidienne est inférieure aux recommandations
+                    if (eau_recom > eau_conso){
+                        echo "Votre consommation d'eau quotidienne n'est pas suffisante"
+                        echo "Consommation d'eau quotidienne recommandée : $eau_recom Litres"
+                    }
+
+                    // Si la consommation quotidienne est largement supérieure aux recommandations
+                    else if (eau_recom * 1.5 <= eau_conso){
+                        echo "Vous consommez trop d'eau quotidiennement"
+                        echo "Consommation d'eau quotidienne recommandée : $eau_recom Litres"
+
+                    }
+
+                    // Si la consommation est égale ou légerment supérieure aux recommandations
+                    else{
+                        echo "Votre consommation d'eau quotidienne est suffisante"
+                        echo "Consommation d'eau quotidienne recommandée : $eau_recom Litres"
+                    }
+                    
+                    // Suivi du sommeil
+
+                    echo "Suivi sommeil :"
+                    
+                    if (sommeil < 7){
+                        echo "Votre temps de sommeil est insuffisant"
+                        echo "Temps de sommeil conseillé : 7 à 10 heures"
+                    }
+                    else if (sommeil > 10){
+                        echo "Votre temps de sommeil est trop important"
+                        echo "Temps de sommeil conseillé : 7 à 10 heures"
+                    }
+                    else {
+                        echo "Votre temps de sommeil est correct"
+                        echo "Temps de sommeil conseillé : 7 à 10 heures"
+                    }
+
+                }
+            }
+        }
+        stage("Test-EPIC-Rapport_calorique"){
+            steps{
+                script{
+                    def type_abonnement = "${params.TYPE_ABONNEMENT}"
+                    def salle = "${params.SALLE}"
+                    def accompagnement = "${params.ACCOMPAGNEMENT}"
+
+                    // Conseiller activités physiques
+                    echo "Activités physiques conseillées :"
+                    echo "Soyez actif au moins 2 heures et demie par semaine pour en retirer des bienfaits pour la santé, Mettez l’accent sur l’activité aérobique d’intensité modérée à élevée répartie tout au long de la semaine en séances de dix minutes ou plus chacune, Améliorez votre tonus en ajoutant, au moins deux jours par semaine, des activités qui travaillent les muscles et les os"
+
+                    if (type_abonnement == "Prenium"){
+                        // Mise en relation avec des salles de sport
+                        if (salle == "true"){
+                            echo "Mise en relation avec nos salles de sport partenaires :"
+                            echo "Grâce à votre abonnement Prenium, vous bénéficiez d'un abonnement spécial avec nos salles de sport partenaires ! Vous pouvez décider d'être suivi par un coach."
+                            echo "L'abonnement spécial est disponible chez : Fitness Park, Basic-Fit, Magic Form, GigaFit, On Air"
+                        }
+                        // Mise en relation avec des diététiciens et des nutritionnistes
+                        if (accompagnement == "true"){
+                            echo "Mise en relation avec des diététiciens et des nutritionnistes"
+                            echo "Grâce à votre abonnement Premium, vous bénificiez d'un abonnement spécial avec nos experts en alimentation partenaires ! Vous pouvez décider d'être suivi par un diètéticien ou un nutritionniste"
+                            echo "Listes des nutritionnistes / diététiciens partenaires : SmartDiet (entreprise), Daniel Monnier, Donation de Montazac, Fabien Torez, Virginie Marechal, Emmanuel-Jean Reynaud"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
